@@ -14,30 +14,47 @@
     "url": "https://github.com/google/marzipano/issues"
   },
   "scripts": {
-    "test": "testem ci",
-    "livetest": "testem",
+    "server": "nodemon --watch webpack.config.js --exec \"webpack-dev-server\"",
+    "test": "testem ci -p 8085",
+    "livetest": "testem -p 8085",
     "dev": "scripts/dev",
     "release": "scripts/release",
     "deploy": "scripts/deploy",
     "prepublishOnly": "scripts/prepublish"
   },
   "dependencies": {
+    "@babel/runtime": "^7.3.4",
     "bowser": "^1.9.4",
     "gl-matrix": "^3.0.0-0",
     "hammerjs": "git://github.com/digisfera/hammer.js.git",
     "minimal-event-emitter": "^1.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.4",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "browser-sync": "^2.26.3",
+    "browser-sync-webpack-plugin": "^2.2.2",
     "browserify": "^16.2.2",
     "chai": "^4.2.0",
+    "clean-webpack-plugin": "^2.0.0",
     "deep-equal": "^1.0.1",
     "flex-sdk": "^4.6.0-0",
     "jsdoc": "^3.5.5",
     "lr-http-server": "^0.1.5",
     "mocha": "^5.2.0",
+    "nodemon": "^1.18.10",
     "sinon": "^7.1.1",
     "testem": "^2.14.0",
     "uglify-js": "^2.8.29",
-    "watchify": "^3.11.0"
+    "watchify": "^3.11.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
   }
 }
