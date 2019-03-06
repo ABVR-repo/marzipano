@@ -3,40 +3,43 @@
 const path = require('path');
 require("@babel/polyfill");
 require("@babel/plugin-transform-runtime");
-// const htmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-module.exports = function(env)  {
+
+module.exports = function(env)  { // eslint-disable-line no-unused-vars
 
 	const config = {
-		devServer: {
-			overlay: true,
-			contentBase: path.join(__dirname, '..'),
-			port: 6294,
-			// publicPath: '/assets/', // this will serve all our bundled assets from localhost/assets/ instead of localhost/
-			useLocalIp: true,
-			writeToDisk: true,
-		},
-		devtool: 'source-map',
-		mode: 'development',
-		// mode: 'production',
-
+		// ENTRY & OUTPUT
+		name: 'marzipano',
 		entry: {
 			marzipano: './src/index.js',
 		},
 		output: {
 			path: path.resolve(__dirname, 'dist'),
-			filename: '[name].js',
-			library: '[name]',
+			filename: 'marzipano.js',
+			library: 'marzipano',
 			libraryTarget: 'global'
 		},
-		// externals: { // for production, we should make sure this is external, since we'll load it on the top level index page
-		// 	jquery: 'jQuery'
+		
+		// DEVELOPMENT
+		// devServer: {
+		// 	overlay: true,
+		// 	contentBase: path.join(__dirname, '..'),
+		// 	port: 6294,
+		// 	// publicPath: '/assets/', // this will serve all our bundled assets from localhost/assets/ instead of localhost/
+		// 	useLocalIp: true,
+		// 	writeToDisk: true,
 		// },
+		devtool: 'source-map',
+		mode: 'development',
+		// mode: 'production',
+
+		// PLUGINS
 		plugins: [
 			new CleanWebpackPlugin(),
 		],
 
+		// MODULES
 		module: {
 			rules : [{
 					test: /\.js$/,
@@ -66,6 +69,7 @@ module.exports = function(env)  {
 		}
 	};
 
+	// EXTRAS BASED ON ENV
 	// if (env && env.browser) {
 	// 	config.plugins.push(new BrowserSyncPlugin({
 	// 		server: {baseDir: '.'},

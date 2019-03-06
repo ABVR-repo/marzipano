@@ -15,6 +15,8 @@
  */
 'use strict';
 
+console.log('Finished loading marzipano.js');
+
 module.exports = {
 
   // Stages.
