@@ -10,26 +10,30 @@ module.exports = function(env)  { // eslint-disable-line no-unused-vars
 
 	const config = {
 		// ENTRY & OUTPUT
-		name: 'marzipano',
+		name: 'Marzipano',
 		entry: {
-			marzipano: './src/index.js',
+			Marzipano: './src/index.js',
 		},
 		output: {
-			path: path.resolve(__dirname, 'dist'),
+			path: path.resolve(__dirname, 'build'),
 			filename: 'marzipano.js',
-			library: 'marzipano',
+			library: 'Marzipano',
 			libraryTarget: 'global'
 		},
 		
 		// DEVELOPMENT
-		// devServer: {
-		// 	overlay: true,
-		// 	contentBase: path.join(__dirname, '..'),
-		// 	port: 6294,
-		// 	// publicPath: '/assets/', // this will serve all our bundled assets from localhost/assets/ instead of localhost/
-		// 	useLocalIp: true,
-		// 	writeToDisk: true,
-		// },
+		devServer: {
+			overlay: true,
+			contentBase: path.join(__dirname, '..'),
+			port: 6294,
+			// publicPath: '/sizzle/app/', 
+			writeToDisk: true,
+			compress: true,
+			// proxy: {
+			// 	'/api': 'http://localhost:3000',
+			// },
+			// useLocalIp: true,
+		},
 		devtool: 'source-map',
 		mode: 'development',
 		// mode: 'production',
@@ -49,9 +53,14 @@ module.exports = function(env)  { // eslint-disable-line no-unused-vars
 						options: {
 							presets: [
 								['@babel/env', {
-									modules: 'false',
-									useBuiltIns: 'entry',
-									targets: ['> 5%']
+									modules: 'commonjs',
+									useBuiltIns: 'usage',
+									targets: {
+										browsers: [
+											'>0.5%'
+										],
+									},
+									// debug: true,
 								}]
 							],
 							plugins: [
@@ -68,25 +77,6 @@ module.exports = function(env)  { // eslint-disable-line no-unused-vars
 			]
 		}
 	};
-
-	// EXTRAS BASED ON ENV
-	// if (env && env.browser) {
-	// 	config.plugins.push(new BrowserSyncPlugin({
-	// 		server: {baseDir: '.'},
-	// 		files: ['./krpano-common/*', './krpano-common/**/*', './sizzle/dist/*', './sizzle/src/*.html'],
-	// 		ghostMode: true,
-	// 		open: false,
-	// 		browser: "google chrome",
-	// 		reloadOnRestart: true,
-	// 		reloadDelay: 50,
-	// 		reloadDebounce: 250,
-	// 		reloadThrottle: 2000,
-	// 		startPath: '/sizzle/src/index-creation.html',
-	// 		minify: false,
-	// 		port: 6294,
-	// 		ui: {port: 6295},
-	// 	}));
-	// }
 
 	return config;
 };
