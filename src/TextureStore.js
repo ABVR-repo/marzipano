@@ -51,7 +51,7 @@ var State = {
 
 var defaultOptions = {
   // Maximum number of cached textures for previously visible tiles.
-  previouslyVisibleCacheSize: 32
+  previouslyVisibleCacheSize: 512
 };
 
 
@@ -148,10 +148,10 @@ function TextureStoreItem(store, tile) {
     // Save a local reference to the texture.
     self._texture = texture;
 
-    // If the asset is dynamic, save a local reference to it and setup
-    // handler to be called whenever it changes.
-    // Otherwise, destroy the asset as we won't be needing it any more.
-    if (asset.dynamic) {
+    // If the asset is dynamic, save a local reference to it and set up a
+    // handler to be called whenever it changes. Otherwise, destroy the asset
+    // as we won't be needing it any longer.
+    if (asset.isDynamic()) {
       self._asset = asset;
       asset.addEventListener('change', self._changeHandler);
     } else {
@@ -288,17 +288,14 @@ eventEmitter(TextureStoreItem);
  * instances, or belonging to a {@link CssStage} or a {@link FlashStage},
  * may not do so due to restrictions on the use of textures across stages.
  *
- * @param {Geometry} geometry The underlying geometry.
  * @param {Source} source The underlying source.
  * @param {Stage} stage The underlying stage.
  * @param {Object} opts Options.
  * @param {Number} [opts.previouslyVisibleCacheSize=32] The maximum number of
  *     previously visible textures to cache according to an LRU policy.
  */
-function TextureStore(geometry, source, stage, opts) {
+function TextureStore(source, stage, opts) {
   opts = defaults(opts || {}, defaultOptions);
-
-  var TileClass = geometry.TileClass;
 
   this._source = source;
   this._stage = stage;
@@ -311,21 +308,21 @@ function TextureStore(geometry, source, stage, opts) {
   this._delimCount = 0;
 
   // The cache proper: map cached tiles to their respective textures/assets.
-  this._itemMap = new Map(TileClass.equals, TileClass.hash);
+  this._itemMap = new Map();
 
   // The subset of cached tiles that are currently visible.
-  this._visible = new Set(TileClass.equals, TileClass.hash);
+  this._visible = new Set();
 
   // The subset of cached tiles that were visible recently, but are not
   // visible right now. Newly inserted tiles replace older ones.
-  this._previouslyVisible = new LruSet(TileClass.equals, TileClass.hash, opts.previouslyVisibleCacheSize);
+  this._previouslyVisible = new LruSet(opts.previouslyVisibleCacheSize);
 
   // The subset of cached tiles that should never be evicted from the cache.
   // A tile may be pinned more than once; map each tile into a reference count.
-  this._pinMap = new Map(TileClass.equals, TileClass.hash);
+  this._pinMap = new Map();
 
   // Temporary variables.
-  this._newVisible = new Set(TileClass.equals, TileClass.hash);
+  this._newVisible = new Set();
   this._noLongerVisible = [];
   this._visibleAgain = [];
   this._evicted = [];
@@ -369,7 +366,7 @@ TextureStore.prototype.clear = function() {
 
   // Collect list of tiles to be evicted.
   self._evicted.length = 0;
-  self._itemMap.each(function(tile) {
+  self._itemMap.forEach(function(tile) {
     self._evicted.push(tile);
   });
 
@@ -398,7 +395,7 @@ TextureStore.prototype.clearNotPinned = function() {
 
   // Collect list of tiles to be evicted.
   self._evicted.length = 0;
-  self._itemMap.each(function(tile) {
+  self._itemMap.forEach(function(tile) {
     if (!self._pinMap.has(tile)) {
       self._evicted.push(tile);
     }
@@ -423,7 +420,7 @@ TextureStore.prototype.clearNotPinned = function() {
  */
 TextureStore.prototype.startFrame = function() {
   // Check that we are in an appropriate state.
-  if (this._state !== State.IDLE) {
+  if (this._state !== State.IDLE && this._state !== State.START) {
     throw new Error('TextureStore: startFrame called out of sequence');
   }
 
@@ -466,7 +463,7 @@ TextureStore.prototype.markTile = function(tile) {
  */
 TextureStore.prototype.endFrame = function() {
   // Check that we are in an appropriate state.
-  if (this._state !== State.START && this._state !== State.MARK) {
+  if (this._state !== State.START && this._state !== State.MARK && this._state !== State.END) {
     throw new Error('TextureStore: endFrame called out of sequence');
   }
 
@@ -489,7 +486,7 @@ TextureStore.prototype._update = function() {
 
   // Calculate the set of tiles that used to be visible but no longer are.
   self._noLongerVisible.length = 0;
-  self._visible.each(function(tile) {
+  self._visible.forEach(function(tile) {
     if (!self._newVisible.has(tile)) {
       self._noLongerVisible.push(tile);
     }
@@ -498,7 +495,7 @@ TextureStore.prototype._update = function() {
   // Calculate the set of tiles that were visible recently and have become
   // visible again.
   self._visibleAgain.length = 0;
-  self._newVisible.each(function(tile) {
+  self._newVisible.forEach(function(tile) {
     if (self._previouslyVisible.has(tile)) {
       self._visibleAgain.push(tile);
     }
@@ -536,7 +533,7 @@ TextureStore.prototype._update = function() {
 
   // Load visible tiles that are not already in the store.
   // Refresh texture on visible tiles for dynamic assets.
-  self._newVisible.each(function(tile) {
+  self._newVisible.forEach(function(tile) {
     var item = self._itemMap.get(tile);
     if (!item) {
       self._loadTile(tile);

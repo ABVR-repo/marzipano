@@ -19,7 +19,7 @@ var Layer = require('./Layer');
 var TextureStore = require('./TextureStore');
 var HotspotContainer = require('./HotspotContainer');
 var eventEmitter = require('minimal-event-emitter');
-var clock = require('./util/clock');
+var now = require('./util/now');
 var noop = require('./util/noop');
 var type = require('./util/type');
 var defaults = require('./util/defaults');
@@ -190,7 +190,7 @@ Scene.prototype.createLayer = function(opts) {
   var geometry = opts.geometry;
   var view = this._view;
   var stage = this._viewer.stage();
-  var textureStore = new TextureStore(geometry, source, stage, textureStoreOpts);
+  var textureStore = new TextureStore(source, stage, textureStoreOpts);
   var layer = new Layer(source, geometry, view, textureStore, layerOpts);
 
   this._layers.push(layer);
@@ -359,7 +359,7 @@ Scene.prototype.startMovement = function(fn, done) {
 
   this._movement = fn;
   this._movementStep = step;
-  this._movementStartTime = clock();
+  this._movementStartTime = now();
   this._movementParams = {};
   this._movementCallback = done;
 
@@ -407,7 +407,7 @@ Scene.prototype._updateMovement = function() {
   var renderLoop = this._viewer.renderLoop();
   var view = this._view;
 
-  var elapsed = clock() - this._movementStartTime;
+  var elapsed = now() - this._movementStartTime;
   var step = this._movementStep;
   var params = this._movementParams;
 

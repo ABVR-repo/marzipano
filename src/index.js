@@ -48,8 +48,8 @@ module.exports = {
   SingleAssetSource: require('./sources/SingleAsset'),
 
   // Assets.
-  DynamicCanvasAsset: require('./assets/DynamicCanvas'),
-  StaticCanvasAsset: require('./assets/StaticCanvas'),
+  StaticAsset: require('./assets/Static'),
+  DynamicAsset: require('./assets/Dynamic'),
 
   // Texture store.
   TextureStore: require('./TextureStore'),
@@ -92,7 +92,7 @@ module.exports = {
     cancelize: require('./util/cancelize'),
     chain: require('./util/chain'),
     clamp: require('./util/clamp'),
-    clock: require('./util/clock'),
+    clearOwnProperties: require('./util/clearOwnProperties'),
     cmp: require('./util/cmp'),
     compose: require('./util/compose'),
     convertFov: require('./util/convertFov'),
@@ -107,6 +107,7 @@ module.exports = {
     inherits: require('./util/inherits'),
     mod: require('./util/mod'),
     noop: require('./util/noop'),
+    now: require('./util/now'),
     once: require('./util/once'),
     pixelRatio: require('./util/pixelRatio'),
     radToDeg: require('./util/radToDeg'),
