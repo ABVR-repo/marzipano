@@ -15,7 +15,7 @@
  */
 'use strict';
 
-console.log('Loading ABVR marzipano.js...');
+console.log('Loading ABVR marzipano.js 0.9.0...');
 
 module.exports = {
 

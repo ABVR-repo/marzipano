@@ -35,8 +35,8 @@ module.exports = function(env)  { // eslint-disable-line no-unused-vars
 			// useLocalIp: true,
 		},
 		devtool: 'source-map',
-		mode: 'development',
-		// mode: 'production',
+		// mode: 'development',
+		mode: 'production',
 
 		// PLUGINS
 		plugins: [
