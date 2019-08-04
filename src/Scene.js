@@ -255,6 +255,7 @@ Scene.prototype.switchTo = function(opts, done) {
  *
  * @param {Object} params Target view parameters.
  * @param {Object} opts Transition options.
+ * @param {function} [opts.ease=easeInOutQuad] Tween easing function
  * @param {number} [opts.controlsInterrupt=false] allow controls to interrupt
  *     an ongoing tween.
  * @param {number} [opts.transitionDuration=1000] Tween duration, in
@@ -267,7 +268,6 @@ Scene.prototype.switchTo = function(opts, done) {
  *    interrupted.
  */
 Scene.prototype.lookTo = function(params, opts, done) {
-  // TODO: provide a way to override the easing function.
   opts = opts || {};
   done = done || noop;
 
@@ -275,6 +275,15 @@ Scene.prototype.lookTo = function(params, opts, done) {
     throw new Error("Target view parameters must be an object");
   }
 
+  // Quadratic in/out easing.
+  var easeInOutQuad = function (k) {
+    if ((k *= 2) < 1) {
+      return 0.5 * k * k;
+    }
+    return -0.5 * (--k * (k - 2) - 1);
+  };
+
+  var ease = opts.ease != null ? opts.ease : easeInOutQuad;
   var controlsInterrupt = opts.controlsInterrupt != null ? opts.controlsInterrupt : false;
   var duration = opts.transitionDuration != null ? opts.transitionDuration : 1000;
   var shortest = opts.shortest != null ? opts.shortest : true;
@@ -292,14 +301,6 @@ Scene.prototype.lookTo = function(params, opts, done) {
   if (shortest && view.normalizeToClosest) {
     view.normalizeToClosest(finalParams, finalParams);
   }
-
-  // Quadratic in/out easing.
-  var ease = function (k) {
-    if ((k *= 2) < 1) {
-      return 0.5 * k * k;
-    }
-    return -0.5 * (--k * (k - 2) - 1);
-  };
 
   var movement = function() {
 
@@ -326,14 +327,14 @@ Scene.prototype.lookTo = function(params, opts, done) {
     };
   };
 
-  var controlsEnabled = this._viewer.controls().enabled();
+  var reenableControls = this._viewer.controls().enabled();
 
   if (!controlsInterrupt) {
     this._viewer.controls().disable();
   }
 
   this.startMovement(movement, function() {
-    if (controlsEnabled && !this._viewer.controls().enabled()) {
+    if (reenableControls) {
       this._viewer.controls().enable();
     }
     done();
@@ -343,7 +344,7 @@ Scene.prototype.lookTo = function(params, opts, done) {
 
 
 /**
- * Starts a movement.
+ * Starts a movement, possibly replacing the current movement.
  *
  * @param {function} fn The movement function.
  * @param {function} done Function to be called when the movement finishes or is
@@ -379,6 +380,10 @@ Scene.prototype.startMovement = function(fn, done) {
 Scene.prototype.stopMovement = function() {
 
   var renderLoop = this._viewer.renderLoop();
+
+  if (!this._movement) {
+    return;
+  }
 
   if (this._movementCallback) {
     this._movementCallback();
