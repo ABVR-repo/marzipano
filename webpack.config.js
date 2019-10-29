@@ -6,7 +6,7 @@ require("@babel/plugin-transform-runtime");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 
-module.exports = function(env)  { // eslint-disable-line no-unused-vars
+module.exports = function (env) { // eslint-disable-line no-unused-vars
 
 	const config = {
 		// ENTRY & OUTPUT
@@ -20,7 +20,7 @@ module.exports = function(env)  { // eslint-disable-line no-unused-vars
 			library: 'Marzipano',
 			libraryTarget: 'global'
 		},
-		
+
 		// DEVELOPMENT
 		devServer: {
 			overlay: true,
@@ -45,36 +45,37 @@ module.exports = function(env)  { // eslint-disable-line no-unused-vars
 
 		// MODULES
 		module: {
-			rules : [{
-					test: /\.js$/,
-					exclude: /node_modules/,
-					use: {
-						loader: 'babel-loader',
-						options: {
-							presets: [
-								['@babel/env', {
-									modules: 'commonjs',
-									useBuiltIns: 'usage',
-									targets: {
-										browsers: [
-											'>0.5%'
-										],
-									},
-									// debug: true,
-								}]
-							],
-							plugins: [
-								["@babel/plugin-transform-runtime", {
-									// corejs: false,
-									// helpers: false,
-									// regenerator: true,
-									// useESModules: false
-								}],
-							]
-						}
+			rules: [{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: [
+							['@babel/preset-env', {
+								modules: 'commonjs',
+								useBuiltIns: 'usage',
+								corejs: '3',
+								targets: {
+									browsers: [
+										'>0.5%'
+									],
+									// ie: 6,
+								},
+								// debug: true,
+							}]
+						],
+						plugins: [
+							["@babel/plugin-transform-runtime", {
+								// corejs: false,
+								// helpers: true,
+								// regenerator: true,
+								// useESModules: true
+							}],
+						]
 					}
 				}
-			]
+			}]
 		}
 	};
 
