@@ -55,12 +55,12 @@ module.exports = function (env) { // eslint-disable-line no-unused-vars
 							['@babel/preset-env', {
 								modules: 'commonjs',
 								useBuiltIns: 'usage',
-								corejs: '3',
+								corejs: 3,
 								targets: {
 									browsers: [
-										'>0.5%'
+										'>0.5%',
+										'not dead',
 									],
-									// ie: 6,
 								},
 								// debug: true,
 							}]
