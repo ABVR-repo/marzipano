@@ -1,7 +1,6 @@
 /* global __dirname */ 		// eslint global declaration 
 
 const path = require('path');
-require("@babel/polyfill");
 require("@babel/plugin-transform-runtime");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
