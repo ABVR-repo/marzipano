@@ -16,6 +16,7 @@
 	"scripts": {
 		"server": "nodemon --watch webpack.config.js --exec \"webpack-dev-server\"",
 		"webpack": "nodemon --watch webpack.config.js --exec \"webpack -w\"",
+		"webpack-once": "webpack",
 		"test": "testem ci -p 8085",
 		"livetest": "testem -p 8085",
 		"dev": "scripts/dev",
