@@ -15,7 +15,7 @@
  */
 'use strict';
 
-console.log('Loading ABVR marzipano.js 0.9.1...'); // TODO need to make this pull from the package.json file
+console.log(`Loading ABVR marzipano.js ${process.env.MARZIPANO_VERSION}...`);
 
 module.exports = {
 

@@ -2,7 +2,9 @@
 
 const path = require('path');
 require("@babel/plugin-transform-runtime");
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MARZIPANO_VERSION = require('./package.json').version;
 
 
 module.exports = function (env) { // eslint-disable-line no-unused-vars
@@ -40,6 +42,9 @@ module.exports = function (env) { // eslint-disable-line no-unused-vars
 		// PLUGINS
 		plugins: [
 			new CleanWebpackPlugin(),
+			new webpack.DefinePlugin({
+				'process.env.MARZIPANO_VERSION': JSON.stringify(MARZIPANO_VERSION),
+			}),
 		],
 
 		// MODULES
