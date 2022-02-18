@@ -10,3 +10,4 @@ npm-debug.log
 /docs/*
 /test/test_suite.js*
 test/temp/
+.idea
