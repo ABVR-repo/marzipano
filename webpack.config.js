@@ -1,13 +1,37 @@
 /* global __dirname */ 		// eslint global declaration 
 
 const path = require('path');
-require("@babel/plugin-transform-runtime");
+require('@babel/plugin-transform-runtime');
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MARZIPANO_VERSION = require('./package.json').version;
 
 
-module.exports = function (env) { // eslint-disable-line no-unused-vars
+module.exports = env => { // eslint-disable-line no-unused-vars
+
+	const babelLoaderOptions = {
+		presets: [
+			['@babel/preset-env', {
+				modules: 'commonjs', // this is required otherwise it throws an error when loading the bundle; thinks its an esmodule?
+				useBuiltIns: 'usage',
+				corejs: { version: '3.21' },
+				bugfixes: true,
+				shippedProposals: true,
+				targets: {
+					browsers: [
+						'defaults',
+						// 'chrome 98'
+					],
+				},
+				// debug: true,
+			}]
+		],
+		plugins: [
+			['@babel/plugin-transform-runtime', {
+				corejs: { version: '3' },
+			}],
+		]
+	};
 
 	const config = {
 		// ENTRY & OUTPUT
@@ -18,22 +42,26 @@ module.exports = function (env) { // eslint-disable-line no-unused-vars
 		output: {
 			path: path.resolve(__dirname, 'build'),
 			filename: 'marzipano.js',
-			library: 'Marzipano',
-			libraryTarget: 'global'
+			library: {
+				name: 'Marzipano',
+				type: 'global',
+			}
 		},
 
 		// DEVELOPMENT
 		devServer: {
-			overlay: true,
-			contentBase: path.join(__dirname, '..'),
 			port: 6294,
-			// publicPath: '/sizzle/app/', 
-			writeToDisk: true,
 			compress: true,
-			// proxy: {
-			// 	'/api': 'http://localhost:3000',
-			// },
-			// useLocalIp: true,
+			client: {
+				overlay: true,
+			},
+			static: {
+				directory: path.join(__dirname, '..'),
+				watch: true,
+			},
+			devMiddleware: {
+				writeToDisk: true,
+			},
 		},
 		devtool: 'source-map',
 		// mode: 'development',
@@ -50,35 +78,12 @@ module.exports = function (env) { // eslint-disable-line no-unused-vars
 		// MODULES
 		module: {
 			rules: [{
-				test: /\.js$/,
+				test: /\.jsx?$/,
 				exclude: /node_modules/,
 				use: {
 					loader: 'babel-loader',
-					options: {
-						presets: [
-							['@babel/preset-env', {
-								modules: 'commonjs',
-								useBuiltIns: 'usage',
-								corejs: 3,
-								targets: {
-									browsers: [
-										'>0.5%',
-										'not dead',
-									],
-								},
-								// debug: true,
-							}]
-						],
-						plugins: [
-							["@babel/plugin-transform-runtime", {
-								// corejs: false,
-								// helpers: true,
-								// regenerator: true,
-								// useESModules: true
-							}],
-						]
-					}
-				}
+					options: babelLoaderOptions,
+				},
 			}]
 		}
 	};
