@@ -109,7 +109,7 @@ Scene.prototype.destroy = function() {
 
 /**
  * Returns the {@link HotspotContainer hotspot container} for the scene.
- * @return {Layer}
+ * @return {HotspotContainer}
  */
 Scene.prototype.hotspotContainer = function() {
   return this._hotspotContainer;
