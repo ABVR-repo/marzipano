@@ -19,8 +19,13 @@ module.exports = env => { // eslint-disable-line no-unused-vars
 				shippedProposals: true,
 				targets: {
 					browsers: [
-						'defaults',
-						// 'chrome 98'
+						'defaults', // base but doesn't include enough...
+						'not IE 11', // already in defaults, but want to call it out explicitly
+						'chrome 64', // from analytics
+						'safari 13', // from analytics
+						'edge 88', // from analytics
+						'firefox 78', // from analytics
+						// 'chrome 98', // testing to see latest
 					],
 				},
 				// debug: true,
@@ -64,8 +69,8 @@ module.exports = env => { // eslint-disable-line no-unused-vars
 			},
 		},
 		devtool: 'source-map',
-		// mode: 'development',
-		mode: 'production',
+		mode: 'development',
+		// mode: 'production',
 
 		// PLUGINS
 		plugins: [

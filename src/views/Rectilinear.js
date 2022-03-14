@@ -108,7 +108,6 @@ var fovLimitEpsilon = 0.000001;
  *     commonly used limiters.
  */
 function RectilinearView(params, limiter) {
-	console.log('NEW RECT VIEW');
   // The initial values for the view parameters.
   this._yaw = params && params.yaw != null ? params.yaw : defaultYaw;
   this._pitch = params && params.pitch != null ? params.pitch : defaultPitch;
@@ -385,7 +384,6 @@ RectilinearView.prototype.setSize = function(size) {
  * @param {RectilinearViewParameters} params
  */
 RectilinearView.prototype.setParameters = function(params) {
-	console.log('SET PARAMS');
   this._resetParams();
   this._params.yaw = params.yaw;
   this._params.pitch = params.pitch;
