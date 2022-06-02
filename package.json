@@ -13,6 +13,7 @@
 	"bugs": {
 		"url": "https://github.com/google/marzipano/issues"
 	},
+	"type": "commonjs",
 	"scripts": {
 		"server": "nodemon --watch webpack.config.js --exec \"webpack-dev-server\"",
 		"webpack": "nodemon --watch webpack.config.js --exec \"webpack -w\"",

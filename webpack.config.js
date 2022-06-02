@@ -18,6 +18,7 @@ module.exports = env => { // eslint-disable-line no-unused-vars
 				bugfixes: true,
 				shippedProposals: true,
 				targets: {
+					electron: '8.2.3',
 					browsers: [
 						'defaults', // base but doesn't include enough...
 						'not IE 11', // already in defaults, but want to call it out explicitly
@@ -69,7 +70,7 @@ module.exports = env => { // eslint-disable-line no-unused-vars
 			},
 		},
 		devtool: 'source-map',
-		mode: 'development',
+		mode: 'development', 
 		// mode: 'production',
 
 		// PLUGINS
