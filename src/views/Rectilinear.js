@@ -396,6 +396,27 @@ RectilinearView.prototype.setParameters = function(params) {
 
 
 /**
+ * Set the view offset parameters. Unspecified parameters are left unchanged.
+ * @param {Object} param0 
+ * @param {Number} param0.yawOffset
+ * @param {Number} param0.pitchOffset
+ * @param {Number} param0.rollOffset
+ */
+RectilinearView.prototype.setOffsetParameters = function({
+	yawOffset = null,
+	pitchOffset = null,
+	rollOffset = null,
+}) {
+	// Offsets to change a view by a certain amount
+	this._resetParams();
+	this._yawOffset = yawOffset === null ? this._yawOffset : yawOffset;
+	this._pitchOffset = pitchOffset === null ? this._pitchOffset : pitchOffset;
+	this._rollOffset = rollOffset === null ? this._rollOffset : rollOffset;
+	this._update(this._params);
+};
+
+
+/**
  * Set the view limiter.
  * @param {?RectilinearViewLimiter} limiter The new limiter, or null to unset.
  */
