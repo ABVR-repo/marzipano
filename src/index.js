@@ -119,3 +119,7 @@ module.exports = {
     hammerjs: require('hammerjs')
   }
 };
+
+window.Hammer = module.exports.dependencies.hammerjs;
+window.Bowser = module.exports.dependencies.bowser;
+window.glMatrix = module.exports.dependencies.glMatrix;
