@@ -18,7 +18,7 @@ module.exports = env => { // eslint-disable-line no-unused-vars
 				bugfixes: true,
 				shippedProposals: true,
 				targets: {
-					electron: '8.2.3',
+					electron: '19.0.8',
 					browsers: [
 						'defaults', // base doesn't include enough...
 						'not IE 11', // already in defaults, but want to call it out explicitly
