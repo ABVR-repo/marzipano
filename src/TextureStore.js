@@ -291,7 +291,7 @@ eventEmitter(TextureStoreItem);
  * @param {Source} source The underlying source.
  * @param {Stage} stage The underlying stage.
  * @param {Object} opts Options.
- * @param {Number} [opts.previouslyVisibleCacheSize=32] The maximum number of
+ * @param {Number} [opts.previouslyVisibleCacheSize=512] The maximum number of
  *     previously visible textures to cache according to an LRU policy.
  */
 function TextureStore(source, stage, opts) {

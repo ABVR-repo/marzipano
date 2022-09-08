@@ -383,7 +383,8 @@ Viewer.prototype._addLayerToStage = function(layer, i) {
 Viewer.prototype._removeLayerFromStage = function(layer) {
   this._stage.removeLayer(layer);
   layer.unpinFirstLevel();
-  layer.textureStore().clearNotPinned();
+  // Quick and dirty hack to make sure we don't unload a texture. This makes sure we don't have massive hitches in projects like IHG crowne plaza, but might have issues with memory usage after a while?
+//   layer.textureStore().clearNotPinned();
 };
 
 
