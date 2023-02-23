@@ -19,34 +19,37 @@ var noop = require('./noop');
 
 // Return a cancelable function that executes fn in a loop until it returns
 // successfully.
-function retry(fn) {
+function retry(fn, { tries } = {}) {
 
-  return function retried() {
+	var curTries = 0;
+	return function retried() {
 
-    var args = arguments.length ? Array.prototype.slice.call(arguments, 0, arguments.length - 1) : [];
-    var done = arguments.length ? arguments[arguments.length - 1] : noop;
+		var args = arguments.length ? Array.prototype.slice.call(arguments, 0, arguments.length - 1) : [];
+		var done = arguments.length ? arguments[arguments.length - 1] : noop;
 
-    var cfn = null;
-    var canceled = false;
+		var cfn = null;
+		var canceled = false;
 
-    function exec() {
-      var err = arguments[0];
-      if (!err || canceled) {
-        done.apply(null, arguments);
-      } else {
-        cfn = fn.apply(null, args);
-      }
-    }
+		function exec() {
+			var err = arguments[0];
+			var retriesExhausted = tries != undefined && ++curTries > tries;
 
-    args.push(exec);
-    exec(true);
+			if (!err || canceled || retriesExhausted) {
+				done.apply(null, arguments);
+			} else {
+				cfn = fn.apply(null, args);
+			}
+		}
 
-    return function cancel() {
-      canceled = true;
-      cfn.apply(null, arguments);
-    };
+		args.push(exec);
+		exec(true);
 
-  };
+		return function cancel() {
+			canceled = true;
+			cfn.apply(null, arguments);
+		};
+
+	};
 
 }
 

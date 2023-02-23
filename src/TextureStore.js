@@ -104,7 +104,7 @@ function TextureStoreItem(store, tile) {
 
   // Retry loading the asset until it succeeds, then create the texture from it.
   // This process may be canceled at any point by calling the destroy() method.
-  var fn = chain(retry(loadAsset), createTexture);
+  var fn = chain(retry(loadAsset, { tries: 3 }), createTexture);
 
   store.emit('textureStartLoad', tile);
   if (debug) {
