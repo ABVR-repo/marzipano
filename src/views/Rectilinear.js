@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var eventEmitter = require('minimal-event-emitter');
-var mat4 = require('gl-matrix').mat4;
-var vec4 = require('gl-matrix').vec4;
-var pixelRatio = require('../util/pixelRatio');
-var convertFov = require('../util/convertFov');
-var mod = require('../util/mod');
-var real = require('../util/real');
-var clamp = require('../util/clamp');
-var decimal = require('../util/decimal');
-var compose = require('../util/compose');
-var clearOwnProperties = require('../util/clearOwnProperties');
+
+import eventEmitter from 'minimal-event-emitter';
+import { mat4 } from 'gl-matrix';
+import { vec4 } from 'gl-matrix';
+import pixelRatio from '../util/pixelRatio';
+import { htov, vtoh } from '../util/convertFov';
+import mod from '../util/mod';
+import real from '../util/real';
+import clamp from '../util/clamp';
+import decimal from '../util/decimal';
+import compose from '../util/compose';
+import clearOwnProperties from '../util/clearOwnProperties';
 
 // Default viewport dimensions.
 // Start with zero to ensure that those values are handled correctly.
@@ -536,7 +536,7 @@ RectilinearView.prototype._normalize = function(params) {
 
   // Make sure that neither the horizontal nor the vertical fields of view
   // exceed π - fovLimitEpsilon.
-  var hfovPi = convertFov.htov(Math.PI, params.width, params.height);
+  var hfovPi = htov(Math.PI, params.width, params.height);
   var maxFov = isNaN(hfovPi) ? Math.PI : Math.min(Math.PI, hfovPi);
   params.fov = clamp(params.fov, fovLimitEpsilon, maxFov - fovLimitEpsilon);
 
@@ -612,7 +612,7 @@ RectilinearView.prototype.updateWithControlParameters = function(parameters) {
   // If the viewport dimensions are zero, assume a square viewport
   // when converting from hfov to vfov.
   var vfov = this._fov;
-  var hfov = convertFov.vtoh(vfov, this._width, this._height);
+  var hfov = vtoh(vfov, this._width, this._height);
   if (isNaN(hfov)) {
     hfov = vfov;
   }
@@ -635,7 +635,7 @@ RectilinearView.prototype._updateProjection = function() {
     var height = this._height;
 
     var vfov = this._fov;
-    var hfov = convertFov.vtoh(vfov, width, height);
+    var hfov = vtoh(vfov, width, height);
     var aspect = width / height;
 
     var projectionCenterX = this._projectionCenterX;
@@ -974,8 +974,8 @@ RectilinearView.limit = {
       var width = params.width;
       var height = params.height;
       if (width > 0 && height > 0) {
-        var vmin = convertFov.htov(min, width, height);
-        var vmax = convertFov.htov(max, width, height);
+        var vmin = htov(min, width, height);
+        var vmax = htov(max, width, height);
         params.fov = clamp(params.fov, vmin, vmax);
       }
       return params;
@@ -1041,4 +1041,4 @@ RectilinearView.limit = {
 RectilinearView.type = RectilinearView.prototype.type = 'rectilinear';
 
 
-module.exports = RectilinearView;
+export default RectilinearView;

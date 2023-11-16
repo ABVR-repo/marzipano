@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var now = require('../util/now');
+
+import now from '../util/now';
 
 
 function WorkTask(fn, cb) {
@@ -171,4 +171,4 @@ WorkQueue.prototype._next = function() {
 };
 
 
-module.exports = WorkQueue;
+export default WorkQueue;

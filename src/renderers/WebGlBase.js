@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var mat4 = require('gl-matrix').mat4;
-var vec3 = require('gl-matrix').vec3;
-var clearOwnProperties = require('../util/clearOwnProperties');
 
-var WebGlCommon = require('./WebGlCommon');
-var createConstantBuffers = WebGlCommon.createConstantBuffers;
-var destroyConstantBuffers = WebGlCommon.destroyConstantBuffers;
-var createShaderProgram = WebGlCommon.createShaderProgram;
-var destroyShaderProgram = WebGlCommon.destroyShaderProgram;
-var enableAttributes = WebGlCommon.enableAttributes;
-var disableAttributes = WebGlCommon.disableAttributes;
-var setViewport = WebGlCommon.setViewport;
-var setupPixelEffectUniforms = WebGlCommon.setupPixelEffectUniforms;
+import { mat4 } from 'gl-matrix';
+import { vec3 } from 'gl-matrix';
+import clearOwnProperties from '../util/clearOwnProperties';
 
-var setDepth = WebGlCommon.setDepth;
-var setTexture = WebGlCommon.setTexture;
+import { createConstantBuffers as _createConstantBuffers, destroyConstantBuffers as _destroyConstantBuffers, createShaderProgram as _createShaderProgram, destroyShaderProgram as _destroyShaderProgram, enableAttributes as _enableAttributes, disableAttributes as _disableAttributes, setViewport as _setViewport, setupPixelEffectUniforms as _setupPixelEffectUniforms, setDepth as _setDepth, setTexture as _setTexture } from './WebGlCommon';
+var createConstantBuffers = _createConstantBuffers;
+var destroyConstantBuffers = _destroyConstantBuffers;
+var createShaderProgram = _createShaderProgram;
+var destroyShaderProgram = _destroyShaderProgram;
+var enableAttributes = _enableAttributes;
+var disableAttributes = _disableAttributes;
+var setViewport = _setViewport;
+var setupPixelEffectUniforms = _setupPixelEffectUniforms;
 
-var vertexSrc = require('../shaders/vertexNormal');
-var fragmentSrc = require('../shaders/fragmentNormal');
+var setDepth = _setDepth;
+var setTexture = _setTexture;
+
+import vertexSrc from '../shaders/vertexNormal';
+import fragmentSrc from '../shaders/fragmentNormal';
 
 var vertexIndices = [0, 1, 2, 0, 2, 3];
 var vertexPositions = [-0.5, -0.5, 0.0, 0.5, -0.5, 0.0, 0.5, 0.5, 0.0, -0.5, 0.5, 0.0];
@@ -139,4 +139,4 @@ WebGlBaseRenderer.prototype.renderTile = function(tile, texture, layer, layerZ) 
 };
 
 
-module.exports = WebGlBaseRenderer;
+export default WebGlBaseRenderer;

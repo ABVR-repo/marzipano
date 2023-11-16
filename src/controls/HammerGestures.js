@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var Hammer = require('hammerjs');
+
+import { Manager, Pan, DIRECTION_ALL, Pinch } from 'hammerjs';
 
 var nextId = 1;
 var idProperty = 'MarzipanoHammerElementId';
@@ -52,18 +52,18 @@ HammerGestures.prototype.get = function(element, type) {
 
 
 HammerGestures.prototype._createManager = function(element, type) {
-  var manager = new Hammer.Manager(element);
+  var manager = new Manager(element);
 
   // Managers are created with different parameters for different pointer
   // types.
   if (type === 'mouse') {
-    manager.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }));
+    manager.add(new Pan({ direction: DIRECTION_ALL, threshold: 0 }));
   }
   else if (type === 'touch' || type === 'pen' || type === 'kinect') {
     // On touch one wants to have both panning and pinching. The panning
     // recognizer needs a threshold to allow the pinch to be recognized.
-    manager.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20, pointers: 1 }));
-    manager.add(new Hammer.Pinch());
+    manager.add(new Pan({ direction: DIRECTION_ALL, threshold: 20, pointers: 1 }));
+    manager.add(new Pinch());
   }
 
   return manager;
@@ -124,4 +124,4 @@ HammerGesturesHandle.prototype.manager = function() {
 };
 
 
-module.exports = new HammerGestures();
+export default new HammerGestures();

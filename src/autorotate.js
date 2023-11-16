@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var defaults = require('./util/defaults');
+
+import defaults from './util/defaults';
 
 var defaultSpeed = 0.1;
 var defaultAccel = 0.01;
@@ -130,4 +130,4 @@ function autorotate(opts) {
 
 }
 
-module.exports = autorotate;
+export default autorotate;

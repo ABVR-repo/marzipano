@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+
 
 // These are used to set the WebGl depth for a tile.
 var MAX_LAYERS = 256; // Max number of layers per stage.
 var MAX_LEVELS = 256; // Max number of levels per layer.
 
-var clamp = require('../util/clamp');
-var vec4 = require('gl-matrix').vec4;
-var vec3 = require('gl-matrix').vec3;
-var mat4 = require('gl-matrix').mat4;
+import clamp from '../util/clamp';
+import { vec4 } from 'gl-matrix';
+import { vec3 } from 'gl-matrix';
+import { mat4 } from 'gl-matrix';
 
 
 function createShader(gl, type, src) {
@@ -36,7 +36,7 @@ function createShader(gl, type, src) {
 }
 
 
-function createShaderProgram(gl, vertexSrc, fragmentSrc, attribList, uniformList) {
+export function createShaderProgram(gl, vertexSrc, fragmentSrc, attribList, uniformList) {
 
   var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexSrc);
   var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentSrc);
@@ -71,7 +71,7 @@ function createShaderProgram(gl, vertexSrc, fragmentSrc, attribList, uniformList
 }
 
 
-function destroyShaderProgram(gl, shaderProgram) {
+export function destroyShaderProgram(gl, shaderProgram) {
   var shaderList = gl.getAttachedShaders(shaderProgram);
   for (var i = 0; i < shaderList.length; i++) {
     var shader = shaderList[i];
@@ -90,7 +90,7 @@ function createConstantBuffer(gl, target, usage, value) {
 }
 
 
-function createConstantBuffers(gl, vertexIndices, vertexPositions, textureCoords) {
+export function createConstantBuffers(gl, vertexIndices, vertexPositions, textureCoords) {
   return {
     vertexIndices: createConstantBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, gl.STATIC_DRAW, new Uint16Array(vertexIndices)),
     vertexPositions: createConstantBuffer(gl, gl.ARRAY_BUFFER, gl.STATIC_DRAW, new Float32Array(vertexPositions)),
@@ -99,14 +99,14 @@ function createConstantBuffers(gl, vertexIndices, vertexPositions, textureCoords
 }
 
 
-function destroyConstantBuffers(gl, constantBuffers) {
+export function destroyConstantBuffers(gl, constantBuffers) {
   gl.deleteBuffer(constantBuffers.vertexIndices);
   gl.deleteBuffer(constantBuffers.vertexPositions);
   gl.deleteBuffer(constantBuffers.textureCoords);
 }
 
 
-function enableAttributes(gl, shaderProgram) {
+export function enableAttributes(gl, shaderProgram) {
   var numAttrs = gl.getProgramParameter(shaderProgram, gl.ACTIVE_ATTRIBUTES);
   for (var i = 0; i < numAttrs; i++) {
     gl.enableVertexAttribArray(i);
@@ -114,7 +114,7 @@ function enableAttributes(gl, shaderProgram) {
 }
 
 
-function disableAttributes(gl, shaderProgram) {
+export function disableAttributes(gl, shaderProgram) {
   var numAttrs = gl.getProgramParameter(shaderProgram, gl.ACTIVE_ATTRIBUTES);
   for (var i = 0; i < numAttrs; i++) {
     gl.disableVertexAttribArray(i);
@@ -122,14 +122,14 @@ function disableAttributes(gl, shaderProgram) {
 }
 
 
-function setTexture(gl, shaderProgram, texture) {
+export function setTexture(gl, shaderProgram, texture) {
   gl.activeTexture(gl.TEXTURE0);
   gl.bindTexture(gl.TEXTURE_2D, texture._texture);
   gl.uniform1i(shaderProgram.uSampler, 0);
 }
 
 
-function setDepth(gl, shaderProgram, layerZ, tileZ) {
+export function setDepth(gl, shaderProgram, layerZ, tileZ) {
   var depth = (((layerZ + 1) * MAX_LEVELS) - tileZ) / (MAX_LEVELS * MAX_LAYERS);
   gl.uniform1f(shaderProgram.uDepth, depth);
 }
@@ -140,7 +140,7 @@ var defaultColorOffset = vec4.create();
 var defaultColorMatrix = mat4.create();
 mat4.identity(defaultColorMatrix);
 
-function setupPixelEffectUniforms(gl, effects, uniforms) {
+export function setupPixelEffectUniforms(gl, effects, uniforms) {
   var opacity = defaultOpacity;
   if (effects && effects.opacity != null) {
     opacity = effects.opacity;
@@ -174,7 +174,7 @@ var scaleVector = vec3.create();
 // Therefore, when the scene's rect is not fully contained in the rendering
 // area, we clamp the viewport to the rendering area, and return a compensation
 // matrix to scale and translate vertices accordingly.
-function setViewport(gl, layer, rect, viewportMatrix) {
+export function setViewport(gl, layer, rect, viewportMatrix) {
   if (rect.x === 0 && rect.width === 1 && rect.y === 0 && rect.height === 1) {
     // Fast path for full rect.
     gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
@@ -217,16 +217,3 @@ function setViewport(gl, layer, rect, viewportMatrix) {
               gl.drawingBufferWidth * clampedWidth,
               gl.drawingBufferHeight * clampedHeight);
 }
-
-module.exports = {
-  createShaderProgram: createShaderProgram,
-  destroyShaderProgram: destroyShaderProgram,
-  createConstantBuffers: createConstantBuffers,
-  destroyConstantBuffers: destroyConstantBuffers,
-  enableAttributes: enableAttributes,
-  disableAttributes: disableAttributes,
-  setTexture: setTexture,
-  setDepth: setDepth,
-  setViewport: setViewport,
-  setupPixelEffectUniforms: setupPixelEffectUniforms
-};

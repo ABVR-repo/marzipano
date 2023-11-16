@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var inherits = require('../util/inherits');
-var hash = require('../util/hash');
-var cmp = require('../util/cmp');
-var common = require('./common');
-var Level = require('./Level');
-var type = require('../util/type');
+
+import inherits from '../util/inherits';
+import hash from '../util/hash';
+import cmp from '../util/cmp';
+import { makeLevelList, makeSelectableLevelList } from './common';
+import Level from './Level';
+import type from '../util/type';
 
 
 /**
@@ -154,8 +154,8 @@ function EquirectGeometry(levelPropertiesList) {
     throw new Error('Level list must be an array');
   }
 
-  this.levelList = common.makeLevelList(levelPropertiesList, EquirectLevel);
-  this.selectableLevelList = common.makeSelectableLevelList(this.levelList);
+  this.levelList = makeLevelList(levelPropertiesList, EquirectLevel);
+  this.selectableLevelList = makeSelectableLevelList(this.levelList);
 }
 
 
@@ -190,4 +190,4 @@ EquirectGeometry.type = EquirectGeometry.prototype.type = 'equirect';
 EquirectTile.type = EquirectTile.prototype.type = 'equirect';
 
 
-module.exports = EquirectGeometry;
+export default EquirectGeometry;

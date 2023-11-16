@@ -83,6 +83,9 @@ module.exports = env => { // eslint-disable-line no-unused-vars
 		module: {
 			rules: [{
 				test: /\.jsx?$/,
+				resolve: {
+					fullySpecified: false,
+				},
 				exclude: /node_modules/,
 				use: {
 					loader: 'babel-loader',

@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var eventEmitter = require('minimal-event-emitter');
-var Composer = require('./Composer');
-var clearOwnProperties = require('../util/clearOwnProperties');
+
+import eventEmitter from 'minimal-event-emitter';
+import Composer from './Composer';
+import clearOwnProperties from '../util/clearOwnProperties';
 
 var debug = typeof MARZIPANODEBUG !== 'undefined' && MARZIPANODEBUG.controls;
 
@@ -426,4 +426,4 @@ Controls.prototype._updateViewsWithControls = function() {
 };
 
 
-module.exports = Controls;
+export default Controls;

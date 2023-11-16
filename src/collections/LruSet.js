@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var mod = require('../util/mod');
+
+import mod from '../util/mod';
 
 // An LruSet holds up to a maximum number of elements, ordered by their time of
 // insertion. When the addition of an element would cause the capacity to be
@@ -113,4 +113,4 @@ LruSet.prototype.forEach = function(fn) {
   return count;
 };
 
-module.exports = LruSet;
+export default LruSet;

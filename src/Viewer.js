@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var eventEmitter = require('minimal-event-emitter');
 
-var RenderLoop = require('./RenderLoop');
-var Controls = require('./controls/Controls');
-var Scene = require('./Scene');
-var Timer = require('./Timer');
+import eventEmitter from 'minimal-event-emitter';
 
-var WebGlStage = require('./stages/WebGl');
+import RenderLoop from './RenderLoop';
+import Controls from './controls/Controls';
+import Scene from './Scene';
+import Timer from './Timer';
 
-var ControlCursor = require('./controls/ControlCursor');
-var HammerGestures = require('./controls/HammerGestures');
+import WebGlStage from './stages/WebGl';
 
-var registerDefaultControls = require('./controls/registerDefaultControls');
-var registerDefaultRenderers = require('./renderers/registerDefaultRenderers');
+import ControlCursor from './controls/ControlCursor';
+import HammerGestures from './controls/HammerGestures';
 
-var setOverflowHidden = require('./util/dom').setOverflowHidden;
-var setAbsolute = require('./util/dom').setAbsolute;
-var setFullSize = require('./util/dom').setFullSize;
+import registerDefaultControls from './controls/registerDefaultControls';
+import registerDefaultRenderers from './renderers/registerDefaultRenderers';
 
-var tween = require('./util/tween');
-var noop = require('./util/noop');
-var clearOwnProperties = require('./util/clearOwnProperties');
+import { setOverflowHidden } from './util/dom';
+import { setAbsolute } from './util/dom';
+import { setFullSize } from './util/dom';
+
+import tween from './util/tween';
+import noop from './util/noop';
+import clearOwnProperties from './util/clearOwnProperties';
 
 /**
  * Signals that the current scene has changed.
@@ -735,4 +735,4 @@ Viewer.prototype.switchScene = function(newScene, opts, done) {
 };
 
 
-module.exports = Viewer;
+export default Viewer;

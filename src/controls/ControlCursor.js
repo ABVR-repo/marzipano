@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var defaults = require('../util/defaults');
-var clearOwnProperties = require('../util/clearOwnProperties');
+
+import defaults from '../util/defaults';
+import clearOwnProperties from '../util/clearOwnProperties';
 
 var defaultOpts = {
   active: 'move',
@@ -129,4 +129,4 @@ ControlCursor.prototype._setCursor = function(cursor) {
   this._element.style.cursor = cursor;
 }
 
-module.exports = ControlCursor;
+export default ControlCursor;

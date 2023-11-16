@@ -13,113 +13,115 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+
 
 console.log(`Loading ABVR marzipano.js ${process.env.MARZIPANO_VERSION}...`);
 
-module.exports = {
+export { default as WebGlStage } from './stages/WebGl';
+export { default as WebGlCubeRenderer } from './renderers/WebGlCube';
+export { default as WebGlFlatRenderer } from './renderers/WebGlFlat';
+export { default as WebGlEquirectRenderer } from './renderers/WebGlEquirect';
+export { default as registerDefaultRenderers } from './renderers/registerDefaultRenderers';
+export { default as CubeGeometry } from './geometries/Cube';
+export { default as FlatGeometry } from './geometries/Flat';
+export { default as EquirectGeometry } from './geometries/Equirect';
+export { default as RectilinearView } from './views/Rectilinear';
+export { default as FlatView } from './views/Flat';
+export { default as ImageUrlSource } from './sources/ImageUrl';
+export { default as SingleAssetSource } from './sources/SingleAsset';
+export { default as StaticAsset } from './assets/Static';
+export { default as DynamicAsset } from './assets/Dynamic';
+export { default as TextureStore } from './TextureStore';
+export { default as Layer } from './Layer';
+export { default as RenderLoop } from './RenderLoop';
+export { default as KeyControlMethod } from './controls/Key';
+export { default as DragControlMethod } from './controls/Drag';
+export { default as QtvrControlMethod } from './controls/Qtvr';
+export { default as ScrollZoomControlMethod } from './controls/ScrollZoom';
+export { default as PinchZoomControlMethod } from './controls/PinchZoom';
+export { default as VelocityControlMethod } from './controls/Velocity';
+export { default as ElementPressControlMethod } from './controls/ElementPress';
+export { default as Controls } from './controls/Controls';
+export { default as Dynamics } from './controls/Dynamics';
+export { default as Viewer } from './Viewer';
+export { default as Scene } from './Scene';
+export { default as Hotspot } from './Hotspot';
+export { default as HotspotContainer } from './HotspotContainer';
+export * as colorEffects from './colorEffects';
+export { default as registerDefaultControls } from './controls/registerDefaultControls';
+export { default as autorotate } from './autorotate';
 
-  // Stages.
-  WebGlStage: require('./stages/WebGl'),
+import async from './util/async';
+import cancelize from './util/cancelize';
+import chain from './util/chain';
+import clamp from './util/clamp';
+import clearOwnProperties from './util/clearOwnProperties';
+import cmp from './util/cmp';
+import compose from './util/compose';
+import * as convertFov from './util/convertFov';
+import decimal from './util/decimal';
+import defaults from './util/defaults';
+import defer from './util/defer';
+import degToRad from './util/degToRad';
+import delay from './util/delay';
+import * as dom from './util/dom';
+import extend from './util/extend';
+import hash from './util/hash';
+import inherits from './util/inherits';
+import mod from './util/mod';
+import noop from './util/noop';
+import now from './util/now';
+import once from './util/once';
+import pixelRatio from './util/pixelRatio';
+import radToDeg from './util/radToDeg';
+import real from './util/real';
+import retry from './util/retry';
+import tween from './util/tween';
+import type from './util/type';
 
-  // Renderers.
-  WebGlCubeRenderer: require('./renderers/WebGlCube'),
-  WebGlFlatRenderer: require('./renderers/WebGlFlat'),
-  WebGlEquirectRenderer: require('./renderers/WebGlEquirect'),
-  registerDefaultRenderers: require('./renderers/registerDefaultRenderers'),
 
-  // Geometries.
-  CubeGeometry: require('./geometries/Cube'),
-  FlatGeometry: require('./geometries/Flat'),
-  EquirectGeometry: require('./geometries/Equirect'),
-
-  // Views.
-  RectilinearView: require('./views/Rectilinear'),
-  FlatView: require('./views/Flat'),
-
-  // Sources.
-  ImageUrlSource: require('./sources/ImageUrl'),
-  SingleAssetSource: require('./sources/SingleAsset'),
-
-  // Assets.
-  StaticAsset: require('./assets/Static'),
-  DynamicAsset: require('./assets/Dynamic'),
-
-  // Texture store.
-  TextureStore: require('./TextureStore'),
-
-  // Layer.
-  Layer: require('./Layer'),
-
-  // Render loop.
-  RenderLoop: require('./RenderLoop'),
-
-  // Controls.
-  KeyControlMethod: require('./controls/Key'),
-  DragControlMethod: require('./controls/Drag'),
-  QtvrControlMethod: require('./controls/Qtvr'),
-  ScrollZoomControlMethod: require('./controls/ScrollZoom'),
-  PinchZoomControlMethod: require('./controls/PinchZoom'),
-  VelocityControlMethod: require('./controls/Velocity'),
-  ElementPressControlMethod: require('./controls/ElementPress'),
-  Controls: require('./controls/Controls'),
-  Dynamics: require('./controls/Dynamics'),
-
-  // High-level API.
-  Viewer: require('./Viewer'),
-  Scene: require('./Scene'),
-
-  // Hotspots.
-  Hotspot: require('./Hotspot'),
-  HotspotContainer: require('./HotspotContainer'),
-
-  // Effects.
-  colorEffects: require('./colorEffects'),
-
-  // Miscellaneous functions.
-  registerDefaultControls: require('./controls/registerDefaultControls'),
-  autorotate: require('./autorotate'),
-
-  // Utility functions.
-  util: {
-    async: require('./util/async'),
-    cancelize: require('./util/cancelize'),
-    chain: require('./util/chain'),
-    clamp: require('./util/clamp'),
-    clearOwnProperties: require('./util/clearOwnProperties'),
-    cmp: require('./util/cmp'),
-    compose: require('./util/compose'),
-    convertFov: require('./util/convertFov'),
-    decimal: require('./util/decimal'),
-    defaults: require('./util/defaults'),
-    defer: require('./util/defer'),
-    degToRad: require('./util/degToRad'),
-    delay: require('./util/delay'),
-    dom: require('./util/dom'),
-    extend: require('./util/extend'),
-    hash: require('./util/hash'),
-    inherits: require('./util/inherits'),
-    mod: require('./util/mod'),
-    noop: require('./util/noop'),
-    now: require('./util/now'),
-    once: require('./util/once'),
-    pixelRatio: require('./util/pixelRatio'),
-    radToDeg: require('./util/radToDeg'),
-    real: require('./util/real'),
-    retry: require('./util/retry'),
-    tween: require('./util/tween'),
-    type: require('./util/type')
-  },
-
-  // Expose dependencies for clients to use.
-  dependencies: {
-    bowser: require('bowser'),
-    glMatrix: require('gl-matrix'),
-    eventEmitter: require('minimal-event-emitter'),
-    hammerjs: require('hammerjs')
-  }
+export const util = {
+  async,
+  cancelize,
+  chain,
+  clamp,
+  clearOwnProperties,
+  cmp,
+  compose,
+  convertFov,
+  decimal,
+  defaults,
+  defer,
+  degToRad,
+  delay,
+  dom,
+  extend,
+  hash,
+  inherits,
+  mod,
+  noop,
+  now,
+  once,
+  pixelRatio,
+  radToDeg,
+  real,
+  retry,
+  tween,
+  type,
 };
 
-window.Hammer = module.exports.dependencies.hammerjs;
-window.Bowser = module.exports.dependencies.bowser;
-window.glMatrix = module.exports.dependencies.glMatrix;
+import bowser from 'bowser';
+import { glMatrix } from 'gl-matrix';
+import eventEmitter from 'minimal-event-emitter';
+import hammerjs from 'hammerjs';
+
+export const dependencies = {
+  bowser,
+  glMatrix,
+  eventEmitter,
+  hammerjs
+};
+
+window.Hammer = dependencies.hammerjs;
+window.Bowser = dependencies.bowser;
+window.glMatrix = dependencies.glMatrix;

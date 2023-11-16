@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+
 
 /**
  * @class Dynamics
@@ -105,4 +105,4 @@ function decreaseAbs(num, dec) {
   return 0;
 }
 
-module.exports = Dynamics;
+export default Dynamics;

@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var eventEmitter = require('minimal-event-emitter');
-var Dynamics = require('./Dynamics');
-var HammerGestures = require('./HammerGestures');
-var defaults = require('../util/defaults');
-var maxFriction = require('./util').maxFriction;
-var clearOwnProperties = require('../util/clearOwnProperties');
+
+import eventEmitter from 'minimal-event-emitter';
+import Dynamics from './Dynamics';
+import HammerGestures from './HammerGestures';
+import defaults from '../util/defaults';
+import { maxFriction } from './util';
+import clearOwnProperties from '../util/clearOwnProperties';
 
 
 var defaultOptions = {
@@ -137,4 +137,4 @@ QtvrControlMethod.prototype._updateDynamics = function(e, release) {
 };
 
 
-module.exports = QtvrControlMethod;
+export default QtvrControlMethod;

@@ -1,6 +1,6 @@
 {
 	"name": "marzipano",
-	"version": "0.10.3",
+	"version": "0.10.4",
 	"description": "A 360° media viewer for the modern web",
 	"author": "Google Inc.",
 	"license": "Apache-2.0",
@@ -13,7 +13,7 @@
 	"bugs": {
 		"url": "https://github.com/google/marzipano/issues"
 	},
-	"type": "commonjs",
+	"type": "module",
 	"scripts": {
 		"server": "nodemon --watch webpack.config.js --exec \"npx webpack-dev-server\"",
 		"webpack": "nodemon --watch webpack.config.js --exec \"npx webpack -w\"",

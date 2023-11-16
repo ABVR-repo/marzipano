@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var setTransform = require('./dom').setTransform;
-var decimal = require('./decimal');
+
+import { setTransform } from './dom';
+import decimal from './decimal';
 
 function positionAbsolutely(element, x, y, extraTransforms) {
   extraTransforms = extraTransforms || '';
@@ -26,4 +26,4 @@ function positionAbsolutely(element, x, y, extraTransforms) {
   setTransform(element, transform);
 }
 
-module.exports = positionAbsolutely;
+export default positionAbsolutely;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+
 
 // Jenkins one-at-a-time hash
 // http://www.burtleburtle.net/bob/hash/doobs.html
@@ -34,4 +34,4 @@ function hash() {
   return h >= 0 ? h : -h;
 }
 
-module.exports = hash;
+export default hash;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+
 
 var defaultPixelRatio = 1;
 
@@ -34,4 +34,4 @@ function pixelRatio() {
   return defaultPixelRatio;
 }
 
-module.exports = pixelRatio;
+export default pixelRatio;

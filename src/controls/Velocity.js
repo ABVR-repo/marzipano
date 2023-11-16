@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var eventEmitter = require('minimal-event-emitter');
-var Dynamics = require('./Dynamics');
-var clearOwnProperties = require('../util/clearOwnProperties');
+
+import eventEmitter from 'minimal-event-emitter';
+import Dynamics from './Dynamics';
+import clearOwnProperties from '../util/clearOwnProperties';
 
 /**
  * @class VelocityControlMethod
@@ -65,4 +65,4 @@ VelocityControlMethod.prototype.setFriction = function(friction) {
   this.emit('parameterDynamics', this._parameter, this._dynamics);
 };
 
-module.exports = VelocityControlMethod;
+export default VelocityControlMethod;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+
 
 // Make ctor a subclass of superCtor.
 // Do not depend on ES5 Object.create semantics because of older browsers.
@@ -25,4 +25,4 @@ function inherits(ctor, superCtor) {
   ctor.prototype.constructor = ctor;
 }
 
-module.exports = inherits;
+export default inherits;

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var noop = require('./noop');
+
+import noop from './noop';
 
 // Return a cancelable function that executes fn in a loop until it returns
 // successfully.
@@ -53,4 +53,4 @@ function retry(fn, { tries } = {}) {
 
 }
 
-module.exports = retry;
+export default retry;

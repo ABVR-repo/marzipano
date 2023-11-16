@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var vec4 = require('gl-matrix').vec4;
-var mat4 = require('gl-matrix').mat4;
+
+import { vec4 } from 'gl-matrix';
+import { mat4 } from 'gl-matrix';
 
 /**
  * Helper functions for color transformation {@link Effects}.
@@ -40,7 +40,7 @@ var mat4 = require('gl-matrix').mat4;
  *
  * @memberof colorEffects
  */
-function identity(resultArg) {
+export function identity(resultArg) {
   var result = resultArg || {};
   result.colorOffset = result.colorOffset || vec4.create();
   result.colorMatrix = result.colorMatrix || mat4.create();
@@ -58,7 +58,7 @@ function identity(resultArg) {
  *
  * @memberof colorEffects
  */
-function applyToPixel(pixel, effect, result) {
+export function applyToPixel(pixel, effect, result) {
   vec4TransformMat4Transposed(result, pixel, effect.colorMatrix);
   vec4.add(result, result, effect.colorOffset);
 }
@@ -87,7 +87,7 @@ function vec4TransformMat4Transposed(out, a, m) {
  * @memberof colorEffects
  */
 var tmpPixel = vec4.create();
-function applyToImageData(imageData, effect) {
+export function applyToImageData(imageData, effect) {
   var width = imageData.width;
   var height = imageData.height;
   var data = imageData.data;
@@ -101,9 +101,3 @@ function applyToImageData(imageData, effect) {
     data[i*4+3] = tmpPixel[3]*255;
   }
 }
-
-module.exports = {
-  identity: identity,
-  applyToPixel: applyToPixel,
-  applyToImageData: applyToImageData
-};

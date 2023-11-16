@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+
 
 /**
  * Convert fov
@@ -27,7 +27,7 @@
  * @return {number}
  * @memberof util.convertFov
  */
-function convert(fov, fromDimension, toDimension) {
+export function convert(fov, fromDimension, toDimension) {
   return 2 * Math.atan(toDimension * Math.tan(fov / 2) / fromDimension);
 }
 
@@ -38,7 +38,7 @@ function convert(fov, fromDimension, toDimension) {
  * @return {number}
  * @memberof util.convertFov
  */
-function htov(fov, width, height) {
+export function htov(fov, width, height) {
   return convert(fov, width, height);
 }
 
@@ -49,7 +49,7 @@ function htov(fov, width, height) {
  * @return {number}
  * @memberof util.convertFov
  */
-function htod(fov, width, height) {
+export function htod(fov, width, height) {
   return convert(fov, width, Math.sqrt(width * width + height * height));
 }
 
@@ -60,7 +60,7 @@ function htod(fov, width, height) {
  * @return {number}
  * @memberof util.convertFov
  */
-function vtoh(fov, width, height) {
+export function vtoh(fov, width, height) {
   return convert(fov, height, width);
 }
 
@@ -71,7 +71,7 @@ function vtoh(fov, width, height) {
  * @return {number}
  * @memberof util.convertFov
  */
-function vtod(fov, width, height) {
+export function vtod(fov, width, height) {
   return convert(fov, height, Math.sqrt(width * width + height * height));
 }
 
@@ -82,7 +82,7 @@ function vtod(fov, width, height) {
  * @return {number}
  * @memberof util.convertFov
  */
-function dtoh(fov, width, height) {
+export function dtoh(fov, width, height) {
   return convert(fov, Math.sqrt(width * width + height * height), width);
 }
 
@@ -93,19 +93,6 @@ function dtoh(fov, width, height) {
  * @return {number}
  * @memberof util.convertFov
  */
-function dtov(fov, width, height) {
+export function dtov(fov, width, height) {
   return convert(fov, Math.sqrt(width * width + height * height), height);
 }
-
-/**
- * @namespace util.convertFov
- */
-module.exports = {
-  convert: convert,
-  htov: htov,
-  htod: htod,
-  vtoh: vtoh,
-  vtod: vtod,
-  dtoh: dtoh,
-  dtov: dtov
-};

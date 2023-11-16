@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var StaticAsset = require('../assets/Static');
-var NetworkError = require('../NetworkError');
-var browser = require('bowser');
-var global = require('../util/global');
-var once = require('../util/once');
+
+import StaticAsset from '../assets/Static';
+import NetworkError from '../NetworkError';
+import { firefox, safari } from 'bowser';
+import global from '../util/global';
+import once from '../util/once';
 
 // TODO: Move the load queue into the loader.
 
 // Whether to use createImageBitmap instead of a canvas for cropping.
 // See https://caniuse.com/?search=createimagebitmap
-var useCreateImageBitmap = !!global.createImageBitmap && !browser.firefox && !browser.safari;
+var useCreateImageBitmap = !!global.createImageBitmap && !firefox && !safari;
 
 // Options for createImageBitmap.
 var createImageBitmapOpts = {
@@ -136,4 +136,4 @@ HtmlImageLoader.prototype._handleError = function(url, done) {
   done(new NetworkError('Network error: ' + url));
 };
 
-module.exports = HtmlImageLoader;
+export default HtmlImageLoader;

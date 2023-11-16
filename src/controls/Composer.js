@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var eventEmitter = require('minimal-event-emitter');
-var Dynamics = require('./Dynamics');
-var now = require('../util/now');
-var clearOwnProperties = require('../util/clearOwnProperties');
+
+import eventEmitter from 'minimal-event-emitter';
+import Dynamics from './Dynamics';
+import now from '../util/now';
+import clearOwnProperties from '../util/clearOwnProperties';
 
 /**
  * @class ControlComposer
@@ -188,4 +188,4 @@ ControlComposer.prototype.destroy = function() {
 };
 
 
-module.exports = ControlComposer;
+export default ControlComposer;

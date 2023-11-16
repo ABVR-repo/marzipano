@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var Stage = require('./Stage');
-var HtmlImageLoader = require('../loaders/HtmlImage');
-var browser = require('bowser');
-var inherits = require('../util/inherits');
-var pixelRatio = require('../util/pixelRatio');
-var ispot = require('../util/ispot');
-var setAbsolute = require('../util/dom').setAbsolute;
-var setFullSize = require('../util/dom').setFullSize;
-var clearOwnProperties = require('../util/clearOwnProperties');
+
+import Stage from './Stage';
+import HtmlImageLoader from '../loaders/HtmlImage';
+import { chrome } from 'bowser';
+import inherits from '../util/inherits';
+import pixelRatio from '../util/pixelRatio';
+import ispot from '../util/ispot';
+import { setAbsolute } from '../util/dom';
+import { setFullSize } from '../util/dom';
+import clearOwnProperties from '../util/clearOwnProperties';
 
 // TODO(tjgq): Unify Stage and WebGlStage.
 
@@ -33,7 +33,7 @@ var browserQuirks = {
   // existing texture from a video element. On most browsers texSubImage2D is
   // faster, but on Chrome the performance degrades significantly. See:
   // https://bugs.chromium.org/p/chromium/issues/detail?id=612542
-  videoUseTexImage2D: browser.chrome
+  videoUseTexImage2D: chrome
 };
 
 
@@ -392,4 +392,4 @@ WebGlTexture.prototype.destroy = function() {
 WebGlStage.TextureClass = WebGlStage.prototype.TextureClass = WebGlTexture;
 
 
-module.exports = WebGlStage;
+export default WebGlStage;

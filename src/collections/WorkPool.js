@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
-var WorkQueue = require('./WorkQueue');
-var mod = require('../util/mod');
+
+import WorkQueue from './WorkQueue';
+import mod from '../util/mod';
 
 
 function WorkPool(opts) {
@@ -69,4 +69,4 @@ WorkPool.prototype.resume = function() {
 };
 
 
-module.exports = WorkPool;
+export default WorkPool;
